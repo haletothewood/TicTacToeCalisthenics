@@ -1,9 +1,12 @@
-import javax.swing.text.Position;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class Board {
-    public HashMap<Position, Player> movesPlayed = new HashMap<Position, Player>();
+    public HashMap<Position, Player> movesPlayed = new HashMap<>();
+
+    public void add(Position position, Player player) {
+        movesPlayed.put(position, player);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -16,5 +19,9 @@ public class Board {
     @Override
     public int hashCode() {
         return Objects.hash(movesPlayed);
+    }
+
+    public boolean isFull() {
+        return this.movesPlayed.size() == 9;
     }
 }
