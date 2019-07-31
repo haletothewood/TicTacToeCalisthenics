@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class Board {
@@ -13,11 +14,18 @@ public class Board {
     }
 
     Player getWinner() {
-        if (this.movesPlayed.keySet().containsAll(TicTacToeRules.BOTTOM_ROW)) {
-            return Player.X;
+        boolean isWinner;
+        for (HashSet<Position> winningCombination : TicTacToeRules.winningCombinations) {
+            isWinner =  checkForWinner(winningCombination);
+            if (isWinner) {
+                return Player.X;
+            }
         }
-
         return null;
+    }
+
+    private boolean checkForWinner(HashSet<Position> winningCombination) {
+        return this.movesPlayed.keySet().containsAll(winningCombination);
     }
 
     @Override

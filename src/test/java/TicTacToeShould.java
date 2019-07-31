@@ -60,4 +60,102 @@ class TicTacToeShould {
 
         assertThat(ticTacToe.play(new Position(0,2), player)).isEqualTo(expected);
     }
+
+    @Test
+    void provides_X_as_winner_if_X_has_the_middle_row() {
+        Player player = Player.X;
+        Player secondPlayer = Player.O;
+        GameStatus expected = GameStatus.WINNER_X;
+
+        ticTacToe.play(new Position(1,0), player);
+        ticTacToe.play(new Position(1,1), secondPlayer);
+        ticTacToe.play(new Position(1,1), player);
+        ticTacToe.play(new Position(1,0), secondPlayer);
+
+        assertThat(ticTacToe.play(new Position(1,2), player)).isEqualTo(expected);
+    }
+
+    @Test
+    void provides_X_as_winner_if_X_has_the_top_row() {
+        Player player = Player.X;
+        Player secondPlayer = Player.O;
+        GameStatus expected = GameStatus.WINNER_X;
+
+        ticTacToe.play(new Position(2,0), player);
+        ticTacToe.play(new Position(1,1), secondPlayer);
+        ticTacToe.play(new Position(2,1), player);
+        ticTacToe.play(new Position(1,0), secondPlayer);
+
+        assertThat(ticTacToe.play(new Position(2,2), player)).isEqualTo(expected);
+    }
+
+    @Test
+    void provides_X_as_winner_if_X_has_the_left_row() {
+        Player player = Player.X;
+        Player secondPlayer = Player.O;
+        GameStatus expected = GameStatus.WINNER_X;
+
+        ticTacToe.play(new Position(0,0), player);
+        ticTacToe.play(new Position(1,1), secondPlayer);
+        ticTacToe.play(new Position(1,0), player);
+        ticTacToe.play(new Position(1,0), secondPlayer);
+
+        assertThat(ticTacToe.play(new Position(2,0), player)).isEqualTo(expected);
+    }
+
+    @Test
+    void provides_X_as_winner_if_X_has_the_centre_row() {
+        Player player = Player.X;
+        Player secondPlayer = Player.O;
+        GameStatus expected = GameStatus.WINNER_X;
+
+        ticTacToe.play(new Position(1,0), player);
+        ticTacToe.play(new Position(2,1), secondPlayer);
+        ticTacToe.play(new Position(1,1), player);
+        ticTacToe.play(new Position(0,0), secondPlayer);
+
+        assertThat(ticTacToe.play(new Position(1,2), player)).isEqualTo(expected);
+    }
+
+    @Test
+    void provides_X_as_winner_if_X_has_the_right_row() {
+        Player player = Player.X;
+        Player secondPlayer = Player.O;
+        GameStatus expected = GameStatus.WINNER_X;
+
+        ticTacToe.play(new Position(2,0), player);
+        ticTacToe.play(new Position(1,1), secondPlayer);
+        ticTacToe.play(new Position(2,1), player);
+        ticTacToe.play(new Position(0,0), secondPlayer);
+
+        assertThat(ticTacToe.play(new Position(2,2), player)).isEqualTo(expected);
+    }
+
+    @Test
+    void provides_X_as_winner_if_X_has_the_diagonal_from_top_right_to_bottom_left() {
+        Player player = Player.X;
+        Player secondPlayer = Player.O;
+        GameStatus expected = GameStatus.WINNER_X;
+
+        ticTacToe.play(new Position(2,2), player);
+        ticTacToe.play(new Position(1,2), secondPlayer);
+        ticTacToe.play(new Position(1,1), player);
+        ticTacToe.play(new Position(0,1), secondPlayer);
+
+        assertThat(ticTacToe.play(new Position(0,0), player)).isEqualTo(expected);
+    }
+
+    @Test
+    void provides_X_as_winner_if_X_has_the_diagonal_from_top_left_to_bottom_right() {
+        Player player = Player.X;
+        Player secondPlayer = Player.O;
+        GameStatus expected = GameStatus.WINNER_X;
+
+        ticTacToe.play(new Position(0,2), player);
+        ticTacToe.play(new Position(1,2), secondPlayer);
+        ticTacToe.play(new Position(1,1), player);
+        ticTacToe.play(new Position(0,1), secondPlayer);
+
+        assertThat(ticTacToe.play(new Position(2,0), player)).isEqualTo(expected);
+    }
 }
