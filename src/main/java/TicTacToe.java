@@ -1,11 +1,21 @@
 public class TicTacToe {
     public Board board = new Board();
 
-    public TicTacToeResponse play(Position position, Player player) {
+    public GameStatus play(Position position, Player player) {
         if (board.isFull()) {
-            return new TicTacToeResponse(GameStatus.FULL_BOARD, board.movesPlayed);
+            return GameStatus.FULL_BOARD;
         }
+
         board.add(position, player);
-        return new TicTacToeResponse(GameStatus.ON, board.movesPlayed);
+
+        if (winner() != null) {
+            return GameStatus.WINNER_X;
+        }
+
+        return GameStatus.ON;
+    }
+
+    private Player winner() {
+        return board.getWinner();
     }
 }

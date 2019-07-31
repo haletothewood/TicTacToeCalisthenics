@@ -1,12 +1,11 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TicTacToeShould {
+class TicTacToeShould {
     private TicTacToe ticTacToe;
+
     @BeforeEach
     void setUp() {
         ticTacToe = new TicTacToe();
@@ -20,34 +19,20 @@ public class TicTacToeShould {
 
     @Test
     void returns_board_state_after_move() {
-        Player player = new Player();
+        Player player = Player.X;
         Position position = new Position(0,0);
 
-        HashMap<Position, Player> movesPlayed = new HashMap<Position, Player>(){{
-            put(position, player);
-        }};
-        TicTacToeResponse expected = new TicTacToeResponse(GameStatus.ON, movesPlayed);
+        GameStatus expected = GameStatus.ON;
 
         assertThat(ticTacToe.play(position, player)).isEqualTo(expected);
     }
 
     @Test
     void not_allow_more_moves_than_a_full_board() {
-        Player player = new Player();
-        Player secondPlayer = new Player();
-        HashMap<Position, Player> movesPlayed = new HashMap<Position, Player>(){{
-            put(new Position(0,0), player);
-            put(new Position(0,1), secondPlayer);
-            put(new Position(0,2), player);
-            put(new Position(1,0), secondPlayer);
-            put(new Position(1,1), player);
-            put(new Position(1,2), secondPlayer);
-            put(new Position(2,0), player);
-            put(new Position(2,1), secondPlayer);
-            put(new Position(2,2), player);
-        }} ;
+        Player player = Player.X;
+        Player secondPlayer = Player.O;
 
-        TicTacToeResponse expected = new TicTacToeResponse(GameStatus.FULL_BOARD, movesPlayed);
+        GameStatus expected = GameStatus.FULL_BOARD;
 
         ticTacToe.play(new Position(0,0), player);
         ticTacToe.play(new Position(0,1), secondPlayer);
@@ -62,5 +47,17 @@ public class TicTacToeShould {
         assertThat(ticTacToe.play(new Position(2,1), secondPlayer)).isEqualTo(expected);
     }
 
-    
+    @Test
+    void provides_X_as_winner_if_X_has_the_bottom_row() {
+        Player player = Player.X;
+        Player secondPlayer = Player.O;
+        GameStatus expected = GameStatus.WINNER_X;
+
+        ticTacToe.play(new Position(0,0), player);
+        ticTacToe.play(new Position(1,1), secondPlayer);
+        ticTacToe.play(new Position(0,1), player);
+        ticTacToe.play(new Position(1,0), secondPlayer);
+
+        assertThat(ticTacToe.play(new Position(0,2), player)).isEqualTo(expected);
+    }
 }

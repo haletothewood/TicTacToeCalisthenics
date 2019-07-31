@@ -2,10 +2,22 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Board {
-    public HashMap<Position, Player> movesPlayed = new HashMap<>();
+    private HashMap<Position, Player> movesPlayed = new HashMap<>();
 
-    public void add(Position position, Player player) {
-        movesPlayed.put(position, player);
+    void add(Position position, Player player) {
+        this.movesPlayed.put(position, player);
+    }
+
+    boolean isFull() {
+        return this.movesPlayed.size() == 9;
+    }
+
+    Player getWinner() {
+        if (this.movesPlayed.keySet().containsAll(TicTacToeRules.BOTTOM_ROW)) {
+            return Player.X;
+        }
+
+        return null;
     }
 
     @Override
@@ -21,7 +33,4 @@ public class Board {
         return Objects.hash(movesPlayed);
     }
 
-    public boolean isFull() {
-        return this.movesPlayed.size() == 9;
-    }
 }
