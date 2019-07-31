@@ -158,4 +158,19 @@ class TicTacToeShould {
 
         assertThat(ticTacToe.play(new Position(2,0), player)).isEqualTo(expected);
     }
+
+    @Test
+    void provides_O_as_winner_if_O_has_the_bottom_row() {
+        Player player = Player.X;
+        Player secondPlayer = Player.O;
+        GameStatus expected = GameStatus.WINNER_O;
+
+        ticTacToe.play(new Position(2,0), player);
+        ticTacToe.play(new Position(0,0), secondPlayer);
+        ticTacToe.play(new Position(1,1), player);
+        ticTacToe.play(new Position(0,1), secondPlayer);
+        ticTacToe.play(new Position(1,0), player);
+
+        assertThat(ticTacToe.play(new Position(0,2), secondPlayer)).isEqualTo(expected);
+    }
 }

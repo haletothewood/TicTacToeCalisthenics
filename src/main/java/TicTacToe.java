@@ -8,14 +8,14 @@ public class TicTacToe {
 
         board.add(position, player);
 
-        if (winner() != null) {
-            return GameStatus.WINNER_X;
+        if (isWinner()) {
+            return player == Player.X ? GameStatus.WINNER_X : GameStatus.WINNER_O;
         }
 
         return GameStatus.ON;
     }
 
-    private Player winner() {
+    private boolean isWinner() {
         return board.getWinner();
     }
 }

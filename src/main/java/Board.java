@@ -6,26 +6,24 @@ public class Board {
     private HashMap<Position, Player> movesPlayed = new HashMap<>();
 
     void add(Position position, Player player) {
-        this.movesPlayed.put(position, player);
+        movesPlayed.put(position, player);
     }
 
     boolean isFull() {
-        return this.movesPlayed.size() == 9;
+        return movesPlayed.size() == 9;
     }
 
-    Player getWinner() {
-        boolean isWinner;
+    boolean getWinner() {
         for (HashSet<Position> winningCombination : TicTacToeRules.winningCombinations) {
-            isWinner =  checkForWinner(winningCombination);
-            if (isWinner) {
-                return Player.X;
+            if (checkForWinner(winningCombination)) {
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     private boolean checkForWinner(HashSet<Position> winningCombination) {
-        return this.movesPlayed.keySet().containsAll(winningCombination);
+        return movesPlayed.keySet().containsAll(winningCombination);
     }
 
     @Override
