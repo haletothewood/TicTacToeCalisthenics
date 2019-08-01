@@ -1,6 +1,6 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class Board {
     private HashMap<Position, Player> movesPlayed = new HashMap<>();
@@ -13,17 +13,22 @@ public class Board {
         return movesPlayed.size() == 9;
     }
 
-    boolean getWinner() {
+    boolean getWinner(Player player) {
+        Map<Position, Player> movesByPlayer = movesPlayed.entrySet()
+                .stream()
+                .filter(move -> player == move.getValue())
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+
         for (HashSet<Position> winningCombination : TicTacToeRules.winningCombinations) {
-            if (checkForWinner(winningCombination)) {
+            if (checkForWinner(winningCombination, movesByPlayer)) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean checkForWinner(HashSet<Position> winningCombination) {
-        return movesPlayed.keySet().containsAll(winningCombination);
+    private boolean checkForWinner(HashSet<Position> winningCombination, Map<Position, Player> movesByPlayer) {
+        return movesByPlayer.keySet().containsAll(winningCombination);
     }
 
     @Override

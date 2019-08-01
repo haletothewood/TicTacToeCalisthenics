@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TicTacToeShould {
     private TicTacToe ticTacToe;
@@ -35,11 +36,11 @@ class TicTacToeShould {
         GameStatus expected = GameStatus.FULL_BOARD;
 
         ticTacToe.play(new Position(0,0), player);
-        ticTacToe.play(new Position(0,1), secondPlayer);
-        ticTacToe.play(new Position(0,2), player);
+        ticTacToe.play(new Position(0,2), secondPlayer);
+        ticTacToe.play(new Position(0,1), player);
         ticTacToe.play(new Position(1,0), secondPlayer);
-        ticTacToe.play(new Position(1,1), player);
-        ticTacToe.play(new Position(1,2), secondPlayer);
+        ticTacToe.play(new Position(1,2), player);
+        ticTacToe.play(new Position(1,1), secondPlayer);
         ticTacToe.play(new Position(2,0), player);
         ticTacToe.play(new Position(2,1), secondPlayer);
         ticTacToe.play(new Position(2,2), player);
@@ -68,9 +69,9 @@ class TicTacToeShould {
         GameStatus expected = GameStatus.WINNER_X;
 
         ticTacToe.play(new Position(1,0), player);
-        ticTacToe.play(new Position(1,1), secondPlayer);
+        ticTacToe.play(new Position(2,1), secondPlayer);
         ticTacToe.play(new Position(1,1), player);
-        ticTacToe.play(new Position(1,0), secondPlayer);
+        ticTacToe.play(new Position(2,0), secondPlayer);
 
         assertThat(ticTacToe.play(new Position(1,2), player)).isEqualTo(expected);
     }
@@ -98,7 +99,7 @@ class TicTacToeShould {
         ticTacToe.play(new Position(0,0), player);
         ticTacToe.play(new Position(1,1), secondPlayer);
         ticTacToe.play(new Position(1,0), player);
-        ticTacToe.play(new Position(1,0), secondPlayer);
+        ticTacToe.play(new Position(1,2), secondPlayer);
 
         assertThat(ticTacToe.play(new Position(2,0), player)).isEqualTo(expected);
     }
@@ -173,4 +174,13 @@ class TicTacToeShould {
 
         assertThat(ticTacToe.play(new Position(0,2), secondPlayer)).isEqualTo(expected);
     }
+
+    @Test
+    void ensures_X_goes_first() {
+        Player player = Player.O;
+
+        assertThrows(IllegalArgumentException.class, () -> ticTacToe.play(new Position(0,0), player));
+    }
+
+
 }
