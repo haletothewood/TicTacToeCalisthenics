@@ -31,6 +31,10 @@ public class Board {
         return movesByPlayer.keySet().containsAll(winningCombination);
     }
 
+    boolean alreadyPlayed(Position position) {
+        return movesPlayed.keySet().contains(position);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,7 +48,4 @@ public class Board {
         return Objects.hash(movesPlayed);
     }
 
-    public boolean alreadyPlayed(Position position) {
-        return movesPlayed.keySet().contains(position);
-    }
 }

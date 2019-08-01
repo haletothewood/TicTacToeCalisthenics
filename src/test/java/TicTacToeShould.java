@@ -14,13 +14,7 @@ class TicTacToeShould {
     }
 
     @Test
-    void begin_with_an_empty_board() {
-        Board emptyBoard = new Board();
-        assertThat(ticTacToe.board).isEqualTo(emptyBoard);
-    }
-
-    @Test
-    void returns_board_state_after_move() {
+    void returns_board_state_after_X_move() {
         Player player = Player.X;
         Position position = new Position(0,0);
 
@@ -28,6 +22,58 @@ class TicTacToeShould {
 
         assertThat(ticTacToe.play(position, player)).isEqualTo(expected);
     }
+
+    @Test
+    void returns_board_state_after_X_O_move() {
+        ticTacToe.play(new Position(0,0), Player.X);
+
+        GameStatus expected = GameStatus.ON;
+        assertThat(ticTacToe.play(new Position(0,1), Player.O)).isEqualTo(expected);
+    }
+
+    @Test
+    void returns_board_state_after_X_O_X_move() {
+        ticTacToe.play(new Position(0,0), Player.X);
+        ticTacToe.play(new Position(0,2), Player.O);
+
+        GameStatus expected = GameStatus.ON;
+        assertThat(ticTacToe.play(new Position(0,1), Player.X)).isEqualTo(expected);
+    }
+
+    @Test
+    void returns_board_state_after_X_O_X_O_move() {
+        ticTacToe.play(new Position(0,0), Player.X);
+        ticTacToe.play(new Position(0,2), Player.O);
+        ticTacToe.play(new Position(0,1), Player.X);
+
+        GameStatus expected = GameStatus.ON;
+        assertThat(ticTacToe.play(new Position(1,0), Player.O)).isEqualTo(expected);
+    }
+
+    @Test
+    void returns_board_state_after_X_O_X_O_X_move() {
+        ticTacToe.play(new Position(0,0), Player.X);
+        ticTacToe.play(new Position(0,2), Player.O);
+        ticTacToe.play(new Position(0,1), Player.X);
+        ticTacToe.play(new Position(1,0), Player.O);
+
+        GameStatus expected = GameStatus.ON;
+        assertThat(ticTacToe.play(new Position(1,2), Player.X)).isEqualTo(expected);
+    }
+
+    @Test
+    void returns_board_state_after_X_O_X_O_X_O_move() {
+        ticTacToe.play(new Position(0,0), Player.X);
+        ticTacToe.play(new Position(0,2), Player.O);
+        ticTacToe.play(new Position(0,1), Player.X);
+        ticTacToe.play(new Position(1,0), Player.O);
+        ticTacToe.play(new Position(1,2), Player.X);
+
+        GameStatus expected = GameStatus.ON;
+        assertThat(ticTacToe.play(new Position(1,1), Player.O)).isEqualTo(expected);
+    }
+
+    //all the way up to full board
 
     @Test
     void not_allow_more_moves_than_a_full_board() {
