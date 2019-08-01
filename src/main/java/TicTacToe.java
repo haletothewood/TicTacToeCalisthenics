@@ -1,17 +1,22 @@
 public class TicTacToe {
-    public Board board = new Board();
+    Board board;
     private Player currentPlayer = Player.X;
+
+    public TicTacToe(Board board) {
+        this.board = board;
+    }
 
     public GameStatus play(Position position, Player player) {
         if (board.isFull()) {
             return GameStatus.FULL_BOARD;
         }
 
-        if (currentPlayer != player) throw new IllegalArgumentException("Wrong player, switch turns!");
+        if (wrongPlayer(player)) throw new IllegalArgumentException("Wrong player, switch turns!");
+        if (board.alreadyPlayed(position)) throw new IllegalArgumentException("You can't play in the same position as someone else! Play again.");
 
         board.add(position, player);
 
-        if (isWinner(player)) {
+        if (theWinnerIs(player)) {
             return player == Player.X ? GameStatus.WINNER_X : GameStatus.WINNER_O;
         }
 
@@ -19,11 +24,15 @@ public class TicTacToe {
         return GameStatus.ON;
     }
 
+    private boolean wrongPlayer(Player player) {
+        return currentPlayer != player;
+    }
+
     private Player togglePlayer() {
         return currentPlayer == Player.X ? Player.O : Player.X;
     }
 
-    private boolean isWinner(Player player) {
+    private boolean theWinnerIs(Player player) {
         return board.getWinner(player);
     }
 }

@@ -44,4 +44,7 @@ public class Board {
         return Objects.hash(movesPlayed);
     }
 
+    public boolean alreadyPlayed(Position position) {
+        return movesPlayed.keySet().contains(position);
+    }
 }

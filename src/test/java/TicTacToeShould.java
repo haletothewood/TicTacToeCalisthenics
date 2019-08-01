@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TicTacToeShould {
@@ -9,7 +10,7 @@ class TicTacToeShould {
 
     @BeforeEach
     void setUp() {
-        ticTacToe = new TicTacToe();
+        ticTacToe = new TicTacToe(new Board());
     }
 
     @Test
@@ -179,8 +180,18 @@ class TicTacToeShould {
     void ensures_X_goes_first() {
         Player player = Player.O;
 
-        assertThrows(IllegalArgumentException.class, () -> ticTacToe.play(new Position(0,0), player));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> ticTacToe.play(new Position(0,0), player));
+        assertEquals(exception.getMessage(), "Wrong player, switch turns!");
     }
 
+    @Test
+    void avoids_players_playing_in_the_same_position() {
+        Player player = Player.X;
+        Player secondPlayer = Player.O;
 
+        ticTacToe.play(new Position(2,0), player);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> ticTacToe.play(new Position(2,0), secondPlayer));
+        assertEquals(exception.getMessage(), "You can't play in the same position as someone else! Play again.");
+    }
 }
